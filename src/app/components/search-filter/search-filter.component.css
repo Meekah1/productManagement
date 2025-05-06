@@ -1,0 +1,73 @@
+.search-filter {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+  align-items: end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-group label {
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #555;
+}
+
+.filter-group input,
+.filter-group select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.price-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.price-range input {
+  width: 80px;
+}
+
+.price-range button {
+  padding: 8px 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-reset {
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  align-self: center;
+}
+
+.btn-reset:hover {
+  background-color: #e0e0e0;
+}
+
+@media (max-width: 768px) {
+  .search-filter {
+    grid-template-columns: 1fr;
+  }
+
+  .price-range {
+    flex-wrap: wrap;
+  }
+
+  .price-range input {
+    width: 100%;
+  }
+}

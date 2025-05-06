@@ -1,0 +1,35 @@
+<div class="search-filter">
+    <div class="filter-group">
+      <label for="search">Search</label>
+      <input type="text" id="search" 
+             [(ngModel)]="searchTerm" 
+             (input)="onSearch()"
+             placeholder="Search by name or SKU">
+    </div>
+  
+    <div class="filter-group">
+      <label for="category">Category</label>
+      <select id="category" 
+              [(ngModel)]="selectedCategory" 
+              (change)="onCategorySelect()">
+        <option value="">All Categories</option>
+        <option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </option>
+      </select>
+    </div>
+  
+    <div class="filter-group">
+      <label>Price Range</label>
+      <div class="price-range">
+        <input type="number" [(ngModel)]="minPrice" placeholder="Min" min="0">
+        <span>to</span>
+        <input type="number" [(ngModel)]="maxPrice" placeholder="Max" min="0">
+        <button type="button" (click)="onPriceRangeApply()">Apply</button>
+      </div>
+    </div>
+  
+    <button type="button" class="btn-reset" (click)="resetFilters()">
+      Reset Filters
+    </button>
+  </div>

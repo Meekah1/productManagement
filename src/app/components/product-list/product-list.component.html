@@ -1,0 +1,87 @@
+<div class="product-manager">
+  <header class="header">
+    <h1>Product Management</h1>
+    <button (click)="showAddForm()" class="btn btn-primary">Add Product</button>
+  </header>
+
+  <div *ngIf="lowStockProducts.length > 0" class="alert alert-warning">
+    ⚠️ Low stock alert: {{ lowStockProducts.length }} product(s) below threshold
+  </div>
+
+  <app-search-filter
+    (searchChange)="onSearchChange($event)"
+    (categoryChange)="onCategoryChange($event)"
+    (priceRangeChange)="onPriceRangeChange($event)"
+  >
+  </app-search-filter>
+
+  <div class="product-table-container">
+    <table class="product-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>SKU</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Description</th>
+          <th>Stock</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let product of filteredProducts"
+          [class.low-stock-row]="
+            product.stock <= (product.lowStockThreshold || 5)
+          "
+        >
+          <td>
+            <a [routerLink]="['/products', product.id]">{{ product.name }}</a>
+            <div *ngIf="product.tags?.length" class="tags">
+              <span *ngFor="let tag of product.tags" class="tag">{{
+                tag
+              }}</span>
+            </div>
+          </td>
+          <td>{{ product.sku }}</td>
+          <td>{{ product.category || "-" }}</td>
+          <td>{{ product.price | currency }}</td>
+          <td>{{ product.description }}</td>
+          <td
+            [class.low-stock]="
+              product.stock <= (product.lowStockThreshold || 5)
+            "
+          >
+            {{ product.stock }}
+            <span
+              *ngIf="product.stock <= (product.lowStockThreshold || 5)"
+              class="badge"
+              >Low</span
+            >
+          </td>
+          <td class="actions">
+            <button (click)="showEditForm(product)" class="btn btn-edit">
+              Edit
+            </button>
+            <button (click)="deleteProduct(product.id)" class="btn btn-delete">
+              Delete
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="filteredProducts.length === 0">
+          <td colspan="6" class="no-products">No products found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="showForm" class="form-overlay">
+    <app-product-form
+      [product]="currentProduct ?? {}"
+      [isEditMode]="isEditMode"
+      (submitForm)="handleFormSubmit($event)"
+      (cancel)="handleFormCancel()"
+    >
+    </app-product-form>
+  </div>
+</div>

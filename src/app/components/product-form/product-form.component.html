@@ -1,0 +1,107 @@
+<div class="product-form">
+  <h2>{{ isEditMode ? "Edit Product" : "Add New Product" }}</h2>
+
+  <form (ngSubmit)="onSubmit()" class="form">
+    <div class="form-group">
+      <label for="name">Name*</label>
+      <input
+        type="text"
+        id="name"
+        [(ngModel)]="product.name"
+        name="name"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="sku">SKU*</label>
+      <input
+        type="text"
+        id="sku"
+        [(ngModel)]="product.sku"
+        name="sku"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price*</label>
+      <input
+        type="number"
+        id="price"
+        [(ngModel)]="product.price"
+        name="price"
+        min="0"
+        step="0.01"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="stock">Stock*</label>
+      <input
+        type="number"
+        id="stock"
+        [(ngModel)]="product.stock"
+        name="stock"
+        min="0"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="lowStockThreshold">Low Stock Threshold</label>
+      <input
+        type="number"
+        id="lowStockThreshold"
+        [(ngModel)]="product.lowStockThreshold"
+        name="lowStockThreshold"
+        min="1"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="category">Category</label>
+      <select id="category" [(ngModel)]="product.category" name="category">
+        <option value="">Select a category</option>
+        <option *ngFor="let category of categories" [value]="category">
+          {{ category }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Tags</label>
+      <div class="tags-container">
+        <button
+          type="button"
+          *ngFor="let tag of availableTags"
+          [class.selected]="isTagSelected(tag)"
+          (click)="toggleTag(tag)"
+          class="tag"
+        >
+          {{ tag }}
+        </button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        [(ngModel)]="product.description"
+        name="description"
+        rows="4"
+      ></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">
+        {{ isEditMode ? "Update" : "Save" }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
